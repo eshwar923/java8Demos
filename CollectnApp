@@ -1,0 +1,101 @@
+package java8CollectnApiDemo;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.BiFunction;
+
+public class CollectnApp {
+    static Person p1 = new Person("name1", 23);
+    static Person p2 = new Person("name2",37);
+    static Person p3 = new Person("name3",30);
+    static Person p4 = new Person("name4",25);
+        
+    static List<Person> pList = new ArrayList<>(Arrays.asList(p1,p2,p3,p4));
+
+    
+    public static void main(String[] args) {
+	//listReplaceAll();
+	//listSort();
+//	listForEach();
+//	listRemoveIf();
+	//listReplaceAll1();
+//	listSortAge();
+	mapGetOrDef();
+    }
+    
+    static void mapComputeIfAbsnt() {
+	Map<String, List<Person>> map = new HashMap<>();
+	map.computeIfAbsent("Bangalore", (city) -> new ArrayList<>()).add(p1);
+	
+    }
+    
+    static void mapGetOrDef() {
+	Map<String, List<Person>> map = new HashMap<>();
+	System.out.println(map.getOrDefault("Hyd", new ArrayList<>()));
+	map.put("Hyd", pList);
+	System.out.println(map.getOrDefault("Hyd", new ArrayList<>()));
+    }
+    
+    static void listSortAge() {
+	pList.sort(Comparator.comparing(Person::getAge));
+	System.out.println(pList);
+	pList.sort(Comparator.comparing(Person::getAge).reversed());
+	System.out.println(pList);
+    }
+    
+    static void listReplaceAll1() {
+	pList.replaceAll(p -> {p.setName(p.getName().toUpperCase()); return p;});
+	System.out.println(pList);
+	
+    }
+    
+    static void listRemoveIf() {
+	pList.removeIf(t -> t.getAge()<30);
+	System.out.println(pList);
+    }
+    
+    static void listForEach() {
+	//pList.forEach((t) -> System.out.println(t));
+	pList.forEach(System.out::println);
+    }
+    
+    static void mapMerge() {
+	Map<String, List<String>> map1 = new HashMap<>();
+	Map<String, List<String>> map2 = new HashMap<>();
+
+	map2.forEach((key,value) -> 
+	  map1.merge(key, value, (oldVal,map2Val) -> {
+	      oldVal.addAll(map2Val); 
+	      return oldVal;
+	  }));
+    }
+    
+    static void listSort() {
+	List<String> l1 = new ArrayList<>();
+	l1.add("dhoni");
+	l1.add("sachin");
+	l1.add("kohli");
+	l1.sort(Comparator.comparing(String::toString));
+	System.out.println(l1);
+	
+    }
+    
+    static void listReplaceAll() {
+	List<String> l1 = new ArrayList<>();
+	l1.add("dhoni");
+	l1.add("sachin");
+	l1.add("kohli");
+	System.out.println(l1);
+	
+	l1.replaceAll(s->s.toUpperCase());
+	System.out.println("uper case:  "+l1);
+	
+	l1.replaceAll(String::toLowerCase);
+	System.out.println("lower case:  "+l1);
+    }
+
+}
