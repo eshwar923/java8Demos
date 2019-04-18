@@ -1,0 +1,29 @@
+package com.iterable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Consumer;
+
+public interface IterableApp<T> extends Iterable<T>{
+    
+    public default void forEach11(Consumer<T> action) {
+	Objects.requireNonNull(action);
+	for(T t: this) {
+	    action.accept(t);
+	}
+    }// In this way forEach in Iterable m8 be implemented
+    
+    public static void main(String[] args) {
+	Iterable<String> i1 = new ArrayList<String>();
+	((List)i1).add("s1");
+	((List)i1).add("s2");
+	((List)i1).add("s3");
+	((List)i1).add("s4");
+	
+	i1.forEach((s) -> {System.out.println("insyd accept of consumer==="+s);});
+	
+	i1.forEach(System.out::println);
+    }
+
+}
